@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+    게시판
+    </h1>
+    
+
+    <br>
+    <h3>글쓰기</h3>
+
+    <form method="post">
+
+    제목: <input id = "id" type="text" size="30" value="" name = "a"> 
+    <br>
+    내용
+    <br>
+    <textarea rows="10" cols="40" style="resize: none;" name = "a"id ="in">
+    </textarea>
+        <br />
+
+    <input type="reset" value="글쓰기" onclick="print()" name = "a">
+
+
+    </form>
+
+    <script type="text/javascript">
+    var a = 0;
+    function print()  {
+        const content = document.getElementById('id').value;
+        const content2 = document.getElementById('in').value;
+        a+=1;
+        document.getElementById("gl").innerText += "\nㅤ"+String(a)+"ㅤㅤㅤㅤㅤ"+content+"ㅤㅤㅤㅤㅤ"+content2;
+        
+    }
+    </script>
+
+    <br>
+    <h3>글 목록</h3>
+    글 번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내용
+
+    <div id = "gl">
+    </div>
+</body>
+</html>
