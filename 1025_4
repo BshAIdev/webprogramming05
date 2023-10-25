@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <style>
+        * {
+            text-align: center;
+        }
+
+        #board {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #board tr td {
+            border: 1px solid white;
+            background: #34da79;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+        }
+
+        #board tr td.clicked {
+            background: #6c5ee7;
+        }
+
+        #board tr td.mine {
+            background: #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>지뢰찾기</h1>
+    <table id=board>
+    </table>
+    <BUTTON onclick="genGrid();">새로운 게임</BUTTON>
+    <script>
+        let grid = document.getElementById("board");
+        genGrid();
+
+        function genGrid() {
+            grid.innerHTML = "";
+            for (let i = 0; i < 32; i++) {
+                let row = grid.insertRow(i);
+                for (var j = 0; j < 32; j++) {
+                    cell = row.insertCell(j);
+                    var mine = document.createAttribute("mine");
+                    if (Math.random() < 0.1)
+                        mine.value = "true";
+                    else
+                        mine.value = "false";
+                    
+                    cell.onclick =function(){ clickBox(this);}
+                }
+                cell.setAttributeNode(mine);
+            }
+        }
+
+        function clickBox(cell) {
+            let grid = document.getElementById("board");
+            if (cell.getAttribute("mine") == "true") {
+                cell.className = "mine";
+                alert("게임이 종료되었습니다.");
+            } else {
+                cell.className = "clicked";
+
+                let numMines = 0;
+                for (let i = -1; i <= 1; i++) {
+                    for (let j = -1; j <= 1; j++) {
+                        let adjacentCell = grid.rows[cell.parentElement.rowIndex + i].cells[cell.cellIndex + j];
+                        if (adjacentCell && adjacentCell.getAttribute("mine") == "true") {
+                            numMines++;
+                        }
+                    }
+                }
+
+                if (numMines == 0) {
+                    for (let i = -1; i <= 1; i++) {
+                        for (let j = -1; j <= 1; j++) {
+                            let adjacentCell = grid.rows[cell.parentElement.rowIndex + i].cells[cell.cellIndex + j];
+                            if (adjacentCell && adjacentCell.getAttribute("mine") == "false" && adjacentCell.className != "clicked") {
+                                clickBox(adjacentCell);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
